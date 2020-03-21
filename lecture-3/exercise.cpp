@@ -54,7 +54,7 @@ void mostraLLS(LISTA * LLS){
 
 //*********************************************************
 //retorna a posição do elemento na LLS
-int buscaSequencialLLS(LISTA * LLS, TIPOCHAVE ch){
+int buscaSequencialLLS(const LISTA * LLS, TIPOCHAVE ch){
   int i = 0;
   while (i < LLS->nroElem){
     if(ch == LLS->A[i].chave)
@@ -62,6 +62,28 @@ int buscaSequencialLLS(LISTA * LLS, TIPOCHAVE ch){
     else i++;
   }
   return -1;
+}
+
+int binary_search(const LISTA * LLS, int size, TIPOCHAVE ch) {
+
+  int msize = size;
+  int base = 0;
+
+  while (msize > 1) {
+    int half = msize / 2;
+    int mid = base + half;
+
+    // mid está sempre entre 0 e size, significa que mid >= 0 e < size.
+    // mid >= 0: por definição
+    // mid < size: mid = size / 2 + size / 4 + size / 8 ...
+    base = LLS->A[mid].chave > ch ? base : mid;
+    msize -= half;
+  }
+
+  // base está sempre entre 0 e size devido a base <= mid.
+  TIPOCHAVE found = LLS->A[base].chave;
+
+  return found == ch ? base : -1;
 }
 
 //*********************************************************
@@ -164,7 +186,7 @@ int main(){
 
         scanf("%d", &chave);
 
-        int posicao = buscaSequencialLLS(&LLS, chave);
+        int posicao = binary_search(&LLS, DIM, chave);
 
         if (posicao != -1) {
           printf("Valor encontrado na posição %d \n", posicao);
