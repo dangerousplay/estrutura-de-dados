@@ -119,8 +119,6 @@ int main() { //__________________________________________
 
         auto nodes = visit_tree(&department);
 
-        nodes.push_back(department);
-
         double sum = salary_sum(nodes);
 
         printf("A soma dos salários dos colaboradores deste departamento: %f \n", sum);
@@ -140,11 +138,11 @@ int main() { //__________________________________________
 
         auto nodes = visit_tree(&department);
 
-        nodes.push_back(department);
-
         auto average = salary_average(nodes);
 
         printf("Média dos salários no departamento '%c': %f \n", sigla, average);
+
+        break;
       }
       case 5: {
         //  printf(" 5 - Apresentar total de salários por departamento (todos departamentos)\n");
@@ -157,7 +155,6 @@ int main() { //__________________________________________
           auto employees = to_vector(node->lista_funcionarios);
 
           auto children = visit_tree(&node);
-          children.push_back(node);
 
           auto sum = salary_sum(children);
 
@@ -167,6 +164,8 @@ int main() { //__________________________________________
             print_employee(employee);
           }
         }
+
+        break;
       }
       case 6: {
         auto nodes = visit_tree(&departments);
@@ -177,12 +176,13 @@ int main() { //__________________________________________
           auto employees = to_vector(node->lista_funcionarios);
 
           auto children = visit_tree(&node);
-          children.push_back(node);
 
           auto average = salary_average(children);
 
           printf("Média dos salários: %f \n", average);
         }
+
+        break;
       }
       case 7: {
         printf("Digite o nome do colaborador: ");

@@ -214,15 +214,19 @@ std::vector<No_Funcionario*> to_vector(No_Funcionario* employees) {
   return vector;
 }
 
-double salary_sum(std::vector<nodo*> departments) {
-  return std::accumulate(departments.begin(), departments.end(), 0, [](float initial, nodo* department) {
+double salary_sum(const std::vector<nodo*>& departments) {
+  float total = 0.0;
+
+  for (auto department: departments) {
     auto left = to_vector(department->lista_funcionarios);
     std::vector<float> salaries(left.size());
 
     std::transform(left.begin(), left.end(), salaries.begin(), [](No_Funcionario* employee) { return employee->salario; });
 
-    return initial + std::accumulate(salaries.begin(), salaries.end(), 0.0);
-  });
+    return total + std::accumulate(salaries.begin(), salaries.end(), 0.0);
+  }
+
+  return total;
 }
 
 double salary_average(std::vector<nodo*> departments) {
